@@ -553,6 +553,31 @@ services:
       - resumelm-network
     restart: "no"
 
+  # One-shot: applies repo SQL migrations once auth (and thus auth.users) is up.
+  # Keeps the local DB in sync with supabase/migrations instead of relying on the
+  # hand-maintained base snapshot. See scripts/apply-migrations.sh.
+  migrator:
+    image: supabase/postgres:15.14.1.066
+    container_name: resumelm-migrator
+    depends_on:
+      db:
+        condition: service_healthy
+      auth:
+        condition: service_healthy
+    volumes:
+      - ./scripts/apply-migrations.sh:/apply-migrations.sh:ro
+      - ../supabase/migrations:/migrations:ro
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_NAME=postgres
+      - PGPASSWORD=${POSTGRES_PASSWORD:-postgres-dev-password}
+    entrypoint: ["/bin/sh", "/apply-migrations.sh"]
+    networks:
+      - resumelm-network
+    restart: "no"
+
 volumes:
   db-data:
   storage-data:
