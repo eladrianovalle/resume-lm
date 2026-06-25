@@ -151,7 +151,7 @@ export function ProfileEditForm({ profile: initialProfile }: ProfileEditFormProp
       const MODEL_STORAGE_KEY = 'resumelm-default-model';
       const LOCAL_STORAGE_KEY = 'resumelm-api-keys';
       
-      const selectedModel = localStorage.getItem(MODEL_STORAGE_KEY) || 'gpt-5.4-nano';
+      const selectedModel = localStorage.getItem(MODEL_STORAGE_KEY) || 'claude-haiku-4-5-20251001';
       const storedKeys = localStorage.getItem(LOCAL_STORAGE_KEY);
       let apiKeys = [];
       

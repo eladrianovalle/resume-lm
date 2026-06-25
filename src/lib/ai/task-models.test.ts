@@ -6,27 +6,27 @@ import type { AIConfig } from "@/lib/ai-models";
 
 describe("task model routing", () => {
   it("routes full resume tailoring by plan", () => {
-    assert.equal(getTaskModel("jobTailoring", false), "gpt-5.4-nano");
-    assert.equal(getTaskModel("jobTailoring", true), "gpt-5.5");
+    assert.equal(getTaskModel("jobTailoring", false), "claude-haiku-4-5-20251001");
+    assert.equal(getTaskModel("jobTailoring", true), "claude-opus-4-7");
   });
 
-  it("routes extraction and scoring to GPT-5.4 Nano", () => {
-    assert.equal(getTaskModel("structuredExtraction", false), "gpt-5.4-nano");
-    assert.equal(getTaskModel("structuredExtraction", true), "gpt-5.4-nano");
-    assert.equal(getTaskModel("resumeScoring", false), "gpt-5.4-nano");
-    assert.equal(getTaskModel("resumeScoring", true), "gpt-5.4-nano");
+  it("routes extraction and scoring to Claude Haiku", () => {
+    assert.equal(getTaskModel("structuredExtraction", false), "claude-haiku-4-5-20251001");
+    assert.equal(getTaskModel("structuredExtraction", true), "claude-haiku-4-5-20251001");
+    assert.equal(getTaskModel("resumeScoring", false), "claude-sonnet-4-6");
+    assert.equal(getTaskModel("resumeScoring", true), "claude-sonnet-4-6");
   });
 
-  it("routes bullet generation and cover letters to GPT-5.4 Mini", () => {
-    assert.equal(getTaskModel("contentGeneration", false), "gpt-5.4-mini");
-    assert.equal(getTaskModel("contentGeneration", true), "gpt-5.4-mini");
-    assert.equal(getTaskModel("coverLetter", false), "gpt-5.4-mini");
-    assert.equal(getTaskModel("coverLetter", true), "gpt-5.4-mini");
+  it("routes bullet generation and cover letters to Claude Sonnet", () => {
+    assert.equal(getTaskModel("contentGeneration", false), "claude-sonnet-4-6");
+    assert.equal(getTaskModel("contentGeneration", true), "claude-sonnet-4-6");
+    assert.equal(getTaskModel("coverLetter", false), "claude-sonnet-4-6");
+    assert.equal(getTaskModel("coverLetter", true), "claude-sonnet-4-6");
   });
 
-  it("routes free chat assistant to GPT-5.4 Nano", () => {
-    assert.equal(getTaskModel("chatAssistant", false), "gpt-5.4-nano");
-    assert.equal(getTaskModel("chatAssistant", true), "gpt-5.5");
+  it("routes chat assistant by plan", () => {
+    assert.equal(getTaskModel("chatAssistant", false), "claude-haiku-4-5-20251001");
+    assert.equal(getTaskModel("chatAssistant", true), "claude-opus-4-7");
   });
 
   it("preserves API keys and custom prompts while replacing the model", () => {
@@ -46,7 +46,7 @@ describe("task model routing", () => {
       config,
     });
 
-    assert.equal(resolved.model, "gpt-5.4-nano");
+    assert.equal(resolved.model, "claude-haiku-4-5-20251001");
     assert.deepEqual(resolved.apiKeys, config.apiKeys);
     assert.deepEqual(resolved.customPrompts, config.customPrompts);
   });

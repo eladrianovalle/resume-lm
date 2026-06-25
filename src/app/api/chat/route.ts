@@ -47,7 +47,9 @@ export async function POST(req: Request) {
       isPro,
     });
 
-    // Some models (e.g., GPT-5 family / GPT-5 Mini) only support the default temperature (1)
+    // Some models only support the default temperature (1) and reject any explicit
+    // temperature (e.g. GPT-5 family, and Claude Opus 4.7 which returns
+    // "`temperature` is deprecated for this model"). Pin temperature to 1 for these.
     const requiresDefaultTemp = [
       'gpt-5',
       'gpt-5.4',
@@ -56,6 +58,7 @@ export async function POST(req: Request) {
       'gpt-5.4-pro',
       'gpt-5.5',
       'gpt-5.5-pro',
+      'claude-opus-4-7',
     ].includes(routedConfig.model);
     
     // Gemini models support a thinking phase—explicitly disable it to avoid added latency/cost

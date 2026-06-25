@@ -369,8 +369,8 @@ const MODEL_ALIASES: Record<string, string> = {
 // ========================
 
 export const DEFAULT_MODELS = {
-  PRO_USER: 'gpt-5.5',
-  FREE_USER: 'gpt-5.4-nano'
+  PRO_USER: 'claude-opus-4-7',
+  FREE_USER: 'claude-haiku-4-5-20251001'
 } as const
 
 // ========================
@@ -381,38 +381,42 @@ export const DEFAULT_MODELS = {
  * Designated models for specific use cases throughout the application.
  * Change these to update which models are used globally.
  */
+// Local override: routed to Anthropic Claude models so the app runs on an
+// ANTHROPIC_API_KEY (no OpenAI key required). Cheap=haiku, balanced=sonnet,
+// frontier=opus. All three IDs exist in this registry and are valid API models.
 export const MODEL_DESIGNATIONS = {
   // Fast & cheap model for parsing, simple tasks, quick analysis
-  FAST_CHEAP: 'gpt-5.4-nano',
+  FAST_CHEAP: 'claude-haiku-4-5-20251001',
   // Alternative fast & cheap option (free for all users)
-  FAST_CHEAP_FREE: 'gpt-5.4-nano',
+  FAST_CHEAP_FREE: 'claude-haiku-4-5-20251001',
   // Structured extraction, parsing, and data normalization
-  STRUCTURED_EXTRACTION: 'gpt-5.4-nano',
-  // Resume scoring and analysis
-  RESUME_SCORING: 'gpt-5.4-nano',
+  STRUCTURED_EXTRACTION: 'claude-haiku-4-5-20251001',
+  // Resume scoring and analysis. Sonnet, not Haiku — Haiku 4.5 mangles the
+  // large nested resumeScoreSchema and fails Zod validation on tailored resumes.
+  RESUME_SCORING: 'claude-sonnet-4-6',
   // Single-item rewrites and lightweight editing
-  SIMPLE_REWRITE: 'gpt-5.4-nano',
+  SIMPLE_REWRITE: 'claude-haiku-4-5-20251001',
   // Multi-bullet and polished content generation
-  CONTENT_GENERATION: 'gpt-5.4-mini',
+  CONTENT_GENERATION: 'claude-sonnet-4-6',
   // Cover letter generation
-  COVER_LETTER: 'gpt-5.4-mini',
+  COVER_LETTER: 'claude-sonnet-4-6',
   // Full resume tailoring by plan
-  JOB_TAILORING_FREE: 'gpt-5.4-nano',
-  JOB_TAILORING_PRO: 'gpt-5.5',
+  JOB_TAILORING_FREE: 'claude-haiku-4-5-20251001',
+  JOB_TAILORING_PRO: 'claude-opus-4-7',
   // Interactive assistant by plan
-  CHAT_ASSISTANT_FREE: 'gpt-5.4-nano',
-  CHAT_ASSISTANT_PRO: 'gpt-5.5',
+  CHAT_ASSISTANT_FREE: 'claude-haiku-4-5-20251001',
+  CHAT_ASSISTANT_PRO: 'claude-opus-4-7',
   // Frontier model for complex tasks, deep analysis, best quality
-  FRONTIER: 'gpt-5.5',
+  FRONTIER: 'claude-opus-4-7',
   // Alternative frontier model
   FRONTIER_ALT: 'claude-opus-4-7',
   // Balanced model - good quality but faster/cheaper than frontier
-  BALANCED: 'gpt-5.4-mini',
+  BALANCED: 'claude-sonnet-4-6',
   // Vision-capable model for image analysis
-  VISION: 'gpt-5.4-mini',
+  VISION: 'claude-sonnet-4-6',
   // Default models by user type
-  DEFAULT_PRO: 'gpt-5.5',
-  DEFAULT_FREE: 'gpt-5.4-nano'
+  DEFAULT_PRO: 'claude-opus-4-7',
+  DEFAULT_FREE: 'claude-haiku-4-5-20251001'
 } as const
 
 // Type for model designations
